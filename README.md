@@ -17,7 +17,7 @@ https://github.com/bfabiszewski/kterm/releases
 
 首先你要确定在你的Linux系统上面拥有 debootstrap，在Ubuntu等系统上，你可以通过 sudo apt-get install debootstrap 来获得它。
 
-值得一提的是，大部分版本的Kindle它的内存只有8G所以我设置的默认 ext3 分区大小为1GB（1024b）如果你拥有 KIndle pw 4等拥有32G高内存的机器,你可以修改 MakeImage.sh 脚本中 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' 把其中的 1024 换成你想要的大小(单位是bit)。
+值得一提的是，大部分版本的Kindle它的内存只有8G所以我设置的默认 ext3 分区大小为1GB（1024b）如果你拥有 KIndle pw 4等拥有32G高内存的机器,你可以修改 MakeImage.sh 脚本中 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' 把其中的 1024 换成你想要的大小(单位是B)。
 
 在没有报错的完成这个脚本后你将会得到一个名为分 debian.ext3 的区文件。(我会提供一个可以在中国很好使用的使用中国科学技术大学镜像的分区大小为3G的 debian.ext3 文件。）
 现在，将文件移动到Kindle的根目录（用计算机打开 Kindle 的目录为根目录，即 Kinale 系统上的 /mnt/us/ 目录）
@@ -124,7 +124,7 @@ You need to execute MakeImage.sh on a suitable Linux system and wait for it to c
 
 First you have to make sure you have debootstrap on your Linux system. On Ubuntu and other systems, you can get it by sudo apt-get install debootstrap .
 
-It is worth mentioning that most versions of Kindle have only 8G memory, so I set the default ext3 partition size to 1GB (1024b). If you have a machine with 32G high memory such as KIndle pw 4, you can modify the MakeImage.sh script In 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' replace 1024 with the size you want (unit is bit).
+It is worth mentioning that most versions of Kindle have only 8G memory, so I set the default ext3 partition size to 1GB (1024b). If you have a machine with 32G high memory such as KIndle pw 4, you can modify the MakeImage.sh script In 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' replace 1024 with the size you want (unit is B).
 
 After completing this script without errors you will get a partition file named debian.ext3. (I will provide a debian.ext3 file with a partition size of 3G using the University of Science and Technology of China mirror that can be used well in China.)
 Now, move the file to the root directory of the Kindle (the directory where the Kindle is opened with a computer is the root directory, i.e. /mnt/us/ on the Kinale system)
