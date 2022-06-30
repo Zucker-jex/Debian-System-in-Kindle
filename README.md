@@ -1,3 +1,5 @@
+视频介绍：https://www.bilibili.com/video/BV1c94y1R72e?spm_id_from=333.999.0.0
+
 关于
 
 这是一个可以让你在 Kindle 上挂载 Debian 环境的程序或者脚本。
