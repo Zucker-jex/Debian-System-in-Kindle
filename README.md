@@ -44,9 +44,9 @@ cd /mnt/us
 
 进入单用户模式 Debian 的单用户模式。
 
-cd /deboostrap
+cd /debootstrap
 
-./deboostrap --second-stage
+./debootstrap --second-stage
 
 完成 Debian 系统的安装。
 
@@ -151,9 +151,9 @@ Enter the root directory.
 
 Enter single-user mode Debian's single-user mode.
 
-cd /deboostrap
+cd /debootstrap
 
-./deboostrap --second-stage
+./debootstrap --second-stage
 
 Complete the installation of the Debian system.
 
