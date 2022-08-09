@@ -1,3 +1,14 @@
+说在前面
+
+这个项目适用于,无法忍受kindle自身的Linux环境的人。
+比如像我，只是想在Kindle上做一些轻量化的代码编辑工作，但是只要了解过的人都知道kindle上的Linux环境是个残废。
+为了能随时方便的码字，诞生了这个项目。
+
+有些人对kindle的机能以及该项目的运行提出了疑问，认为在kindle上运行Debian系统会十分卡顿。
+在kindle开机后所运行的服务中，在一个名为lab126_gui的服务。这个服务构成了Kindle的gui。
+因此可以通过某些手段来结束这个服务后运行debian系统。
+是个坑，可能会在下一次版本的更新中填上。
+
 视频介绍：https://www.bilibili.com/video/BV1c94y1R72e?spm_id_from=333.999.0.0
 
 关于
