@@ -18,19 +18,19 @@
 过程
 
 你需要做的第一件事就是越狱你的 Kindle 。越狱过程涉及允许将未签名的应用程序安装到您的Kindle。推荐的方法https://bookfere.com/post/970.html
-然后在你的 Kindle 上面安装 KTerm ，你可以在以下网址上找到它。
+然后在你的 Kindle 上面安装 Kterm ，你可以在以下网址上找到它。
 
 https://bookfere.com/post/98.html
 
 https://github.com/bfabiszewski/kterm/releases
 
-安装完成后，你就拥有了一个在 Kindle 上的终端。安装 Debian 前他您需要生成一个适合您设备的 Debian 映像。
+安装完成后，你就拥有了一个在 Kindle 上的终端。安装 Debian 前需要生成一个适合你设备的 Debian 映像。
 
-你需要在一个合适的 Linux 系统上面执行 MakeImage.sh 并且等待他完成（根据国家的不同这个脚本有两个版本，内容上只有关于镜像网站的改变，可以让你更快的下载镜，并且后期的 apt 也会更改为对应的镜像网站。）
+你需要在一个合适的 Linux 系统上面执行 MakeImage.sh 并且等待他完成（根据国家的不同这个脚本有两个版本，内容上只有关于镜像网站的改变，可以让你更快的下载镜像，并且后期的 apt 也会更改为对应的镜像网站。）
 
 首先你要确定在你的Linux系统上面拥有 debootstrap，在Ubuntu等系统上，你可以通过 sudo apt-get install debootstrap 来获得它。
 
-值得一提的是，大部分版本的Kindle它的内存只有8G所以我设置的默认 ext3 分区大小为1GB如果你拥有 KIndle pw 4等拥有32G高内存的机器,你可以修改 MakeImage.sh 脚本中 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' 把其中的 1024 换成你想要的大小(单位是M)。
+值得一提的是，大部分版本的Kindle它的内存只有8G，所以我设置的默认 ext3 分区大小为1GB如果你拥有 Kindle pw 4等拥有32G高内存的机器,你可以修改 MakeImage.sh 脚本中 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' 把其中的 1024 换成你想要的大小(单位是M)。
 
 在没有报错的完成这个脚本后你将会得到一个名为分 debian.ext3 的区文件。(我会提供一个可以在中国很好使用的使用中国科学技术大学镜像的分区大小为3G的 debian.ext3 文件。）
 现在，将文件移动到Kindle的根目录（用计算机打开 Kindle 的目录为根目录，即 Kinale 系统上的 /mnt/us/ 目录）
