@@ -32,7 +32,7 @@ https://github.com/bfabiszewski/kterm/releases
 
 值得一提的是，大部分版本的Kindle它的内存只有8G，所以我设置的默认 ext3 分区大小为1GB如果你拥有 Kindle pw 4等拥有32G高内存的机器,你可以修改 MakeImage.sh 脚本中 'dd if=/dev/zero of=debian.ext3 bs=1M count=1024' 把其中的 1024 换成你想要的大小(单位是M)。
 
-在没有报错的完成这个脚本后你将会得到一个名为分 debian.ext3 的区文件。(我会提供一个可以在中国很好使用的使用中国科学技术大学镜像的分区大小为3G的 debian.ext3 文件。）
+在没有报错的完成这个脚本后你将会得到一个名为 debian.ext3 的分区文件。(我会提供一个可以在中国很好使用的使用中国科学技术大学镜像的分区大小为3G的 debian.ext3 文件。）
 现在，将文件移动到Kindle的根目录（用计算机打开 Kindle 的目录为根目录，即 Kinale 系统上的 /mnt/us/ 目录）
 
 需要移动的文件有：
