@@ -1,0 +1,40 @@
+{
+	"items": [
+	{
+		"name": "Linux",
+		"priority": -1,
+		"items": [
+		{
+			"name": "Start DebianLinux",
+			"priority": 1,
+			"action": "/mnt/us/extensions/kterm/bin/kterm.sh -e bin/debian.sh"
+		},
+		{
+			"name": "Start DebianLinux(Single user mode)",
+			"priority": 2,
+			"action": "/mnt/us/extensions/kterm/bin/kterm.sh -e 'bin/debian.sh -root'"
+		},
+		{
+			"name": "Mount Debian",
+			"priority": 3,
+			"action": "/mnt/us/extensions/kterm/bin/kterm.sh -e bin/mount.sh"
+		},
+		{
+			"name": "Unmount Debian",
+			"priority": 4,
+			"action": "/mnt/us/extensions/kterm/bin/kterm.sh -e bin/unmount.sh"
+		},
+		{
+			"name": "Kill lab126_gui",
+			"priority": 5,
+			"action": "/mnt/us/extensions/kterm/bin/kterm.sh -e bin/gui.sh"
+		},
+		{
+			"name": "Kill lab126_gui & Clear Service",
+			"priority": 6,
+			"action":"/mnt/us/extensions/kterm/bin/kterm.sh -e 'bin/gui.sh -k'"
+		}
+		]
+	}
+	]
+}
