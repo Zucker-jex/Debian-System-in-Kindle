@@ -117,3 +117,68 @@ jex.zucker@outlook.com
 2846554322@qq.com`
 
 (笔者是学生，可能会出现一个月才能恢复的情况。。)
+
+
+Speaking in front
+This project is suitable for people who cannot tolerate the Kindle's own Linux environment.
+For example, like me, I just want to do some lightweight code editing work on the Kindle, but anyone who knows about it knows that the Linux environment on the Kindle is a cripple.
+In order to facilitate the coding at any time, this project was born.
+Some people have raised questions about the functionality of the Kindle and the operation of the project, believing that running the Debian system on the Kindle would be very cumbersome.
+In the service running after the Kindle is powered on, there is a service named lab126_ GUI services. This service constitutes the GUI of the Kindle.
+Therefore, it is possible to end this service and run the Debian system through certain means.
+It is a pit that may be filled in in the next version update.
+I originally wanted to write a service that runs stop lab126 when the Kindle starts up_ Run kterm after gui, but the operation of kterm requires lab126_ The various service dependencies caused by GUI are abandoned.
+Another way of thinking is to end lab126_ After gui, mount the Debian image and run kterm in Debian, but there are various issues (please refer to https://github.com/bfabiszewski/kterm/issues/26 ）After talking to the author of kterm, I chose a somewhat convoluted approach.
+Here I need to introduce a command called nohup, which can run instructions without hanging. When we were in lab126_ Running stop lab126 in GUI_ All windows provided by the gui will be closed during gui, and kterm cannot be executed. But using nohup xxx.sh can ignore terminal hangs and continue running instructions.
+For ease of operation, I have written a KUAL plugin that simply needs to be uncompressed to/mnt/us/extensions/and moved the Debian image to the directory sys.
+Video introduction: https://www.bilibili.com/video/BV1c94y1R72e?spm_id_from=333.999.0.0
+about
+This is a program or script that allows you to mount Debian environments on a Kindle.
+process
+The first thing you need to do is jailbreak your Kindle. The jailbreak process involves allowing unsigned applications to be installed on your Kindle. Recommended methods https://bookfere.com/post/970.html
+Then install Kterm on your Kindle, which you can find at the following website.
+https://bookfere.com/post/98.html
+https://github.com/bfabiszewski/kterm/releases
+After the installation is completed, you will have a terminal on the Kindle. Before installing Debian, you need to generate a Debian image that is suitable for your device.
+You need to execute MakeImage.sh on a suitable Linux system and wait for it to complete (there are two versions of this script depending on the country, and the content only includes changes to the image website, which can help you download the image faster, and the later apts will also be changed to the corresponding image website)
+Firstly, you need to ensure that you have debootstrap on your Linux system. On systems such as Ubuntu, you can obtain it through sudo apt-get install debootstrap.
+It is worth mentioning that most versions of Kindle only have 8GB of memory, so the default ext3 partition size I set is 1GB. If you have a machine with 32GB of high memory such as Kindle PW 4, you can modify the 'dd if=/dev/zero of=debian. ext3 bs=1M count=1024' in the MakeImage.sh script to replace 1024 with the size you want (in M).
+After completing this script without any errors, you will receive a partition file named debian.ext3. Now, move the files to the root directory of the Kindle (the directory where you open the Kindle on your computer is the root directory, which is the/mnt/us/directory on the Kindle system)
+The files that need to be moved include:
+Debian. ext3
+RunBeforeDebian.sh
+RunDebian.sh
+UpdateInitScript.sh
+On your Kindle terminal, enter:
+Cd/mnt/us
+Enter the root directory.
+./RunDebian. sh -- root
+Enter single user mode Debian's single user mode.
+Cd/debootstrap
+./debootstrap -- second stage
+Complete the installation of Debian system.
+(If you fail here, type CTRL-D to exit single user mode and start with./RunDebian. sh -- r)
+Passwd
+Change your root user password.
+CTRL-D
+Exit single user mode.
+./RunDebian.sh
+Log in to Debian using the root account.
+Adduaer uasrname
+Create a new user.
+Apt get install sudo
+Apt get install vim
+Vim/etc/sudoers
+Edit the configuration file.
+Xxx ALL=(ALL) ALL
+Add configuration, in the opened configuration file, find root ALL=(ALL) ALL, and add a line below.
+Where xxx is the name of the user you want to join.
+CTRL-D
+Exit single user mode.
+./RunBeforeDebian.sh
+Now you can enter the Debian system by pressing the Debian key.
+Debian -- root enters single user mode
+If you have any questions, you can contact me through email.
+jex.zucker@outlook.com
+2846554322@qq.com `
+(The author is a student and may take a month to recover.)
