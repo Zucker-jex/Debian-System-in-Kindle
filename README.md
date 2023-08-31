@@ -180,5 +180,5 @@ Now you can enter the Debian system by pressing the Debian key.
 Debian -- root enters single user mode
 If you have any questions, you can contact me through email.
 jex.zucker@outlook.com
-2846554322@qq.com `
+2846554322@qq.com
 (The author is a student and may take a month to recover.)
