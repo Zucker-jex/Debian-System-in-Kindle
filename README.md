@@ -126,6 +126,7 @@ This project is suitable for people who cannot tolerate the Kindle's own Linux e
 For example, like me, I just want to do some lightweight code editing work on the Kindle, but anyone who knows about it knows that the Linux environment on the Kindle is a cripple.
 
 In order to facilitate the coding at any time, this project was born.
+
 Some people have raised questions about the functionality of the Kindle and the operation of the project, believing that running the Debian system on the Kindle would be very cumbersome.
 
 In the service running after the Kindle is powered on, there is a service named lab126_ GUI services. This service constitutes the GUI of the Kindle.
