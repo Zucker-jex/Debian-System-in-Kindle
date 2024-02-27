@@ -1,112 +1,157 @@
 # 说在前面
 
-这个项目适用于，无法忍受kindle自身的Linux环境的人。\
-比如像我，只是想在Kindle上做一些轻量化的代码编辑工作，但是只要了解过的人都知道kindle上的Linux环境是个残废。\
-为了能随时方便的码字，诞生了这个项目。
+这个项目是为那些无法忍受 Kindle 自身的 Linux 环境的人设计的。就像我一样，只是想在 Kindle 上进行一些轻量级的代码编辑工作，但任何了解 Kindle 上 Linux 环境的人都知道，它功能有限。为了方便随时编写代码，这个项目应运而生。
 
-有些人对kindle的机能以及该项目的运行提出了疑问，认为在kindle上运行Debian系统会十分卡顿。\
-在kindle开机后所运行的服务中，存在一个名为lab126_gui的服务。这个服务构成了Kindle的gui。\
-因此可以通过某些手段来结束这个服务后运行debian系统。\
-是个坑，可能会在下一次版本的更新中填上。
+有些人对 Kindle 的性能和本项目的运行效果表示怀疑，他们认为在 Kindle 上运行 Debian 系统会非常卡顿。事实上，Kindle 启动后会运行一个名为 `lab126_gui` 的服务，它构成了 Kindle 的 GUI 界面。可以通过某些方法停止这个服务后运行 Debian 系统。虽然这是个挑战，但可能会在未来版本中得到解决。
 
-我本来想编写一个服务，在Kindle开机时运行stop lab126_gui后运行kterm，但是kterm的运行需要lab126_gui拉起的各种服务依赖，放弃。\
-另一个思路，在结束lab126_gui后挂载Debian镜像，在Debian中运行kterm，但是存在各种问题（[具体请见](https://github.com/bfabiszewski/kterm/issues/26)），与kterm的作者交谈后我选择了一个有点曲折的方法。\
-在这里我需要介绍一个命令nohup，可以不挂起的运行指令。当我们在lab126_gui中运行stop lab126_gui时gui所提供的所有窗口将关闭，无法执行kterm。但使用nohup xxx.sh就可以无视终端挂起，继续运行指令。
+我本来打算编写一个服务，在 Kindle 启动时运行 `stop lab126_gui` 后再运行 `kterm`，但后来发现 `kterm` 的运行依赖于 `lab126_gui` 启动的各种服务，因此放弃了这个想法。另一个方案是，在结束 `lab126_gui` 后挂载 Debian 镜像，并在 Debian 中运行 `kterm`。不过，这个方法存在许多问题（[详见此处](https://github.com/bfabiszewski/kterm/issues/26)）。与 `kterm` 的作者交流后，我采取了一个稍显曲折的方法。这里需要介绍 `nohup` 命令，它可以在不挂起终端的情况下运行指令。当我们在 `lab126_gui` 中运行 `stop lab126_gui` 时，GUI 提供的所有窗口都会关闭，无法执行 `kterm`。但使用 `nohup xxx.sh` 就可以无视终端挂起，继续运行指令。
 
-为了方便运行，我写了一个KUAL插件，只需要解压到/mnt/us/extensions/，并将Debian镜像移动到目录内sys即可。
+为了方便操作，我编写了一个 KUAL 插件。只需解压到 `/mnt/us/extensions/` 目录，并将 Debian 镜像移动到 sys 目录即可。
 
 - [视频介绍](https://www.bilibili.com/video/BV1c94y1R72e)
 
 # 关于
-这是一个可以让你在Kindle上挂载Debian环境的程序或者脚本。
+
+这是一个可以让你在 Kindle 上挂载 Debian 环境的程序或脚本。
 
 ## 过程
+
 ### 前置要求
-你需要做的第一件事就是越狱你的Kindle。越狱过程涉及允许将未签名的应用程序安装到您的Kindle。[推荐的方法](ttps://bookfere.com/post/970.html)\
-后在你的Kindle上面安装Kterm，你可以在以下网址上找到它。
+
+首先，你需要越狱你的 Kindle。越狱过程包括允许将未签名的应用程序安装到你的 Kindle 上。[推荐的方法](https://bookfere.com/post/970.html)。
+
+然后，在你的 Kindle 上安装 Kterm。你可以在以下网址找到它：
 - https://bookfere.com/post/98.html
 - https://github.com/bfabiszewski/kterm/releases
 
-安装完成后，你就拥有了一个在Kindle上的终端。安装Debian前需要生成一个适合你设备的Debian映像。\
-你需要在一个合适的Linux系统上面执行MakeImage.sh并且等待他完成（根据国家的不同这个脚本有两个版本，内容上只有关于镜像网站的改变，可以让你更快的下载镜像，并且后期的apt也会更改为对应的镜像网站。）\
-首先你要确定在你的Linux系统上面拥有debootstrap，在Ubuntu等系统上，你可以通过sudo apt-get install debootstrap来获得它。\
-值得一提的是，大部分版本的Kindle它的内存只有8G，所以我设置的默认ext3分区大小为1GB如果你拥有Kindle pw 4等拥有32G高内存的机器,你可以修改MakeImage.sh脚本中'dd if=/dev/zero of=debian.ext3 bs=1M count=1024'把其中的1024换成你想要的大小(单位是MB)。\
-在没有报错的完成这个脚本后你将会得到一个名为debian.ext3的分区文件。\
-现在，将文件移动到Kindle的us目录（用计算机打开Kindle驱动器的目录，即 Kinale 系统上的 /mnt/us/ 目录）\
-需要移动的文件有：
-- debian.ext3
-- RunBeforeDebian.sh
-- RunDebian.sh
-- UpdateInitScript.sh
+安装完成后，你就拥有了一个 Kindle 上的终端。在安装 Debian 之前，需要生成一个适合你设备的 Debian 镜像。你需要在一个合适的 Linux 系统上执行 `MakeImage.sh` 并等待其完成。根据国家的不同，这个脚本有两个版本，内容上主要是关于镜像网站的不同，可以让你更快地下载镜像，并且后期的 apt 也会更改为对应的镜像网站。首先，你需要确保你的 Linux 系统上安装了 debootstrap，在 Ubuntu 等系统上，你可以通过 `sudo apt-get install debootstrap` 来获取它。值得一提的是，大部分 Kindle 的内存只有 8G，所以我设置默认的 ext3 分区大小为 1GB。如果你拥有 Kindle PW 4 等高内存的机型（如 32G），你可以修改 `MakeImage.sh` 脚本中的 `dd if=/dev/zero of=debian.ext3 bs=1M count=1024`，把其中的 `1024` 更换成你想要的大小（单位是 MB）。成功完成这个脚本后，你将得到一个名为 `debian.ext3` 的分区文件。
 
-### Kindle上的操作
-在你的Kindle终端输入：
-- cd /mnt/us 进入根目录。
-- ./RunDebian.sh --root 进入单用户模式Debian的单用户模式。
-- cd /debootstrap
-- ./debootstrap --second-stage 进Debian系统安装。（如果你在这里失败了，键入CTRL-D退出单用户模式，并从./RunDebian.sh --r开始）
-- passwd 修改你的root用户密码。
-- CTRL-D
+现在，需要将以下文件移动到 Kindle 的 `us` 目录（即通过计算机打开 Kindle 驱动器的目录，相当于 Kindle 系统上的 `/mnt/us/` 目录）：
 
-- ./RunDebian.sh
-- 用root账号登录Debian。
+- `debian.ext3`
+- `RunBeforeDebian.sh`
+- `RunDebian.sh`
+- `UpdateInitScript.sh`
 
-- ./RunBeforeDebian.sh
+### Kindle 上的操作
 
-现在你可以通过键debian入来进入Debian系统。\
-debian --root进入单用户模式
+进行以下操作来启动 Debian 系统：
 
-如果你有任何问题，可以通过邮箱与我取得联系。
+1. 在你的 Kindle 终端输入：
+   ```
+   cd /mnt/us
+   ```
+   这会将目录切换到根目录。
 
-# Speaking ahead
-This project is suitable for people who cannot tolerate Kindle's own Linux environment\
-For example, like me, I just want to do some lightweight code editing work on the Kindle, but anyone who knows about it knows that the Linux environment on the Kindle is a cripple\
-In order to easily code characters at any time, this project was born.
-Some people have raised doubts about the functionality of Kindle and the operation of the project, believing that running the Debian system on Kindle would be very sluggish\
-There is a service called lab126_gui running in the Kindle after startup. This service constitutes the GUI of Kindle\
-Therefore, it is possible to end this service and run the Debian system through certain means\
-It's a pit that may be filled in in the next version update.
-I originally intended to write a service that would run kterm after stopping lab126_gui on Kindle startup, but the operation of kterm required various service dependencies pulled by lab126_gui, so I gave up\
-Another approach is to mount a Debian image after ending lab126_gui and run kterm in Debian, but there are various issues ([see details](https://github.com/bfabiszewski/kterm/issues/26))After talking to the author of kterm, I chose a somewhat convoluted approach\
-Here I need to introduce a command called nohup, which can run instructions without hanging. When we run stop lab126_gui in lab126_gui, all windows provided by the gui will close and kterm cannot be executed. But using nohup xxx.sh can ignore terminal hang and continue running instructions.
-For ease of operation, I have written a KUAL plugin that only needs to be decompressed to/mnt/us/extensions/and the Debian image moved to the directory sys.
+2. 运行下面的命令以进入 Debian 的单用户模式：
+   ```
+   ./RunDebian.sh --root
+   ```
+
+3. 输入以下命令：
+   ```
+   cd /debootstrap
+   ./debootstrap --second-stage
+   ```
+   这会进入 Debian 系统的安装过程。如果在这个阶段遇到问题，输入 CTRL-D 退出单用户模式，然后从 `./RunDebian.sh --root` 开始重新尝试。
+
+4. 修改你的 root 用户密码：
+   ```
+   passwd
+   ```
+
+5. 再次输入 CTRL-D 退出。
+
+6. 启动 Debian 系统：
+   ```
+   ./RunDebian.sh
+   ```
+   现在可以使用 root 账号登录 Debian 了。
+
+7. 运行：
+   ```
+   ./RunBeforeDebian.sh
+   ```
+   完成以上步骤后，你就可以通过输入 `debian` 来进入 Debian 系统了。如果需要进入单用户模式，请使用 `debian --root` 命令。
+
+
+如果遇到任何问题，欢迎通过邮箱与我联系。
+
+# Preface
+
+This project is designed for those who cannot tolerate the native Linux environment on Kindle. Like myself, I just wanted to do some lightweight coding work on Kindle, but anyone familiar with the Linux environment on Kindle knows it is limited. To facilitate coding at any time, this project was born.
+
+Some people are skeptical about the performance of Kindle and the operational effect of this project, thinking that running a Debian system on Kindle would be very sluggish. In fact, after Kindle is started, it runs a service called `lab126_gui`, which constitutes the GUI interface of Kindle. It is possible to stop this service and then run the Debian system by certain methods. Although this is a challenge, it might be resolved in future versions.
+
+I initially intended to write a service that runs `stop lab126_gui` followed by `kterm` at Kindle's startup, but later found that the operation of `kterm` depends on various services started by `lab126_gui`, so I abandoned this idea. Another plan was to mount the Debian image after ending `lab126_gui`, and run `kterm` within Debian. However, this method has many issues ([see here for details](https://github.com/bfabiszewski/kterm/issues/26)). After communicating with the author of `kterm`, I took a slightly more circuitous approach. Here, the `nohup` command needs to be introduced, which can run instructions without hanging up the terminal. When we run `stop lab126_gui` in `lab126_gui`, all windows provided by the GUI will close, making it impossible to execute `kterm`. But using `nohup xxx.sh` allows us to ignore terminal suspension and continue running instructions.
+
+For convenience, I wrote a KUAL plugin. Just unzip it to the `/mnt/us/extensions/` directory, and move the Debian image to the sys directory.
+
 - [Video Introduction](https://www.bilibili.com/video/BV1c94y1R72e)
 
 # About
-This is a program or script that allows you to mount Debian environments on Kindle.
+
+This is a program or script that allows you to mount a Debian environment on your Kindle.
+
 ## Process
-### Pre requirements
-The first thing you need to do is jailbreak your Kindle. The jailbreak process involves allowing unsigned applications to be installed on your Kindle. [Recommended method]（ ttps://bookfere.com/post/970.html ）\
-After installing Kterm on your Kindle, you can find it at the following website.
+
+### Prerequisites
+
+First, you need to jailbreak your Kindle. The jailbreaking process includes allowing unsigned applications to be installed on your Kindle. [Recommended method](https://bookfere.com/post/970.html).
+
+Then, install Kterm on your Kindle. You can find it at the following addresses:
 - https://bookfere.com/post/98.html
 - https://github.com/bfabiszewski/kterm/releases
 
-After installation, you will have a terminal on the Kindle. Before installing Debian, you need to generate a Debian image that is suitable for your device\
-You need to execute MakeImage.sh on a suitable Linux system and wait for it to complete (there are two versions of this script depending on the country, and the content only includes changes to the image website, which can help you download the image faster, and the later apts will also be changed to the corresponding image website)\
-Firstly, you need to ensure that you have debootstrap on your Linux system. On systems such as Ubuntu, you can obtain it by installing debootstrap through sudo apt-get\
-It is worth mentioning that most versions of Kindle only have 8GB of memory, so the default ext3 partition size I set is 1GB. If you have a machine with 32GB of high memory such as Kindle PW 4, you can modify the MakeImage.sh script to 'dd if=/dev/zero of=debian. ext3 bs=1M count=1024' and replace 1024 with the size you want (in MB)\
-After completing this script without any errors, you will receive a partition file named debian.axt3\
-Now, move the files to the us directory of Kindle (open the directory of Kindle drive on your computer, which is the/mnt/us/directory on the Kindle system)\
-The files that need to be moved include:
-- Debin.ext3
-- RunBeforeDebian.sh
-- RunDebian.sh
-- UpdateInitScript.sh
+After installation, you will have a terminal on Kindle. Before installing Debian, you need to generate a Debian image suitable for your device. You need to execute `MakeImage.sh` on an appropriate Linux system and wait for it to complete. Depending on the country, there are two versions of this script, mainly concerning different mirror sites, allowing you to download the image faster, and the apt will also be changed to the corresponding mirror site later. First, you need to ensure that debootstrap is installed on your Linux system, which can be obtained on Ubuntu and other systems by `sudo apt-get install debootstrap`. It's worth mentioning that most Kindles only have 8G of memory, so I set the default size of the ext3 partition to 1GB. If you own a higher memory model like Kindle PW 4 (e.g., 32G), you can change `dd if=/dev/zero of=debian.ext3 bs=1M count=1024` in the `MakeImage.sh` script, replacing `1024` with the size you want (in MB). After successfully completing this script, you will get a partition file named `debian.ext3`.
+
+Now, you need to move the following files to the Kindle's `us` directory (that is, the directory opened by the computer's Kindle drive, equivalent to the `/mnt/us/` directory on the Kindle system):
+
+- `debian.ext3`
+- `RunBeforeDebian.sh`
+- `RunDebian.sh`
+- `UpdateInitScript.sh`
+
 ### Operations on Kindle
-On your Kindle terminal, enter:
-- Enter the root directory with cd/mnt/us.
-- ./RunDebian.sh -- Root enters single user mode Debian's single user mode.
-- cd /debootstrap
-- ./debuotstrap -- second-stage is installed on the Debian system. (If you fail here, type CTRL-D to exit single user mode and start from./RunDebian. sh -- r)
-- passwd Change your root user password.
-- CTRL-D
-- ./RunDebian.sh
-- Log in to Debian with the root account.
 
-- ./RunBeforeDebian.sh
+Perform the following operations to start the Debian system:
 
-Now you can enter the Debian system by pressing the Debian key\
+1. Enter in your Kindle terminal:
+   ```
+   cd /mnt/us
+   ```
+   This will switch the directory to the root directory.
 
-Debian -- root enters single user mode
+2. Run the following command to enter Debian's single-user mode:
+   ```
+   ./RunDebian.sh --root
+   ```
 
-If you have any questions, you can contact me through email.
+3. Enter the following command:
+   ```
+   cd /debootstrap
+   ./debootstrap --second-stage
+   ```
+   This will start the installation process of the Debian system. If you encounter any issues at this stage, enter CTRL-D to exit single-user mode, then retry starting from `./RunDebian.sh --root`.
+
+4. Change your root user password:
+   ```
+   passwd
+   ```
+
+5. Press CTRL-D again to exit.
+
+6. Start the Debian system:
+   ```
+   ./RunDebian.sh
+   ```
+   Now you can log into Debian using the root account.
+
+7. Run:
+   ```
+   ./RunBeforeDebian.sh
+   ```
+   After completing the above steps, you can enter the Debian system by typing `debian`. If you need to enter single-user mode, use the `debian --root` command.
+
+
+If you encounter any problems, feel free to contact me via email.
