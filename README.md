@@ -1,4 +1,6 @@
 # 说在前面
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZucker-jex%2FDebian-System-in-Kindle.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FZucker-jex%2FDebian-System-in-Kindle?ref=badge_shield)
+
 
 这个项目是为那些无法忍受 Kindle 自身的 Linux 环境的人设计的。就像我一样，只是想在 Kindle 上进行一些轻量级的代码编辑工作，但任何了解 Kindle 上 Linux 环境的人都知道，它功能有限。为了方便随时编写代码，这个项目应运而生。
 
@@ -155,3 +157,7 @@ Perform the following operations to start the Debian system:
 
 
 If you encounter any problems, feel free to contact me via email.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZucker-jex%2FDebian-System-in-Kindle.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FZucker-jex%2FDebian-System-in-Kindle?ref=badge_large)
